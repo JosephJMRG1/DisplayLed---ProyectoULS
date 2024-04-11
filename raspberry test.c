@@ -20,11 +20,11 @@ void pausa()
     usleep(1000000);
 }
 
-void tab(int tablero[FIL][COL])
+void tab(int tablero[COL][FIL])
 {
-    for (int i = 0; i < FIL; i++)
+    for (int i = 0; i < COL; i++)
     {
-        for (int j = 0; j < COL; j++)
+        for (int j = 0; j < FIL; j++)
         {
             printf("%3d", tablero[i][j]);
         }
@@ -33,22 +33,22 @@ void tab(int tablero[FIL][COL])
     printf("\n");
 }
 
-void limpiarTab(int tablero[FIL][COL])
+void limpiarTab(int tablero[COL][FIL])
 {
-    for (int i = 0; i < FIL; i++)
+    for (int i = 0; i < COL; i++)
     {
-        for (int j = 0; j < COL; j++)
+        for (int j = 0; j < FIL; j++)
         {
             tablero[i][j] = 0;
         }
     }
 }
 
-void recorrerTab(int tablero[FIL][COL])
+void recorrerTab(int tablero[COL][FIL])
 {
-    for (int i = 0; i < FIL; i++)
+    for (int i = 0; i < COL; i++)
     {
-        for (int j = 0; j < COL; j++)
+        for (int j = 0; j < FIL; j++)
         {
             tablero[i][j] = PI_HIGH;
             tab(tablero);
@@ -62,7 +62,7 @@ void recorrerTab(int tablero[FIL][COL])
 int main()
 {
     signal(SIGINT, signal_handler);
-    int tablero[FIL][COL];
+    int tablero[COL][FIL];
 
     printf("Presione CTRL + C para salir...\n");
 
