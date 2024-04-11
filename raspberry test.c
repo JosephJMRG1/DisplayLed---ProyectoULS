@@ -61,9 +61,10 @@ void recorrerTab(int tablero[COL][FIL])
 
 int main()
 {
-    signal(SIGINT, signal_handler);
+
     int tablero[COL][FIL];
 
+    signal(SIGINT, signal_handler);
     printf("Presione CTRL + C para salir...\n");
 
     int regressive = 0;
