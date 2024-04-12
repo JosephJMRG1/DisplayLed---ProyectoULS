@@ -2,7 +2,6 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <pigpio.h>
-#include <time.h>
 
 #define FILAS 8
 #define COLUMNAS 8
@@ -10,10 +9,10 @@
 const int pines_filas[FILAS] = {24,25,8,7,12,16,20,21}; // Pines GPIO para las filas
 const int pines_columnas[COLUMNAS] = {26,19,13,6,5,11,9,10}; // Pines GPIO para las columnas
 
-volatile sig_atomic_t recibida_señal = 0;
+volatile sig_atomic_t recibida_seï¿½al = 0;
 
-void manejador_señal(int señal) {
-    recibida_señal = señal;
+void manejador_seï¿½al(int seï¿½al) {
+    recibida_seï¿½al = seï¿½al;
 }
 
 void inicializar_gpio() {
@@ -34,7 +33,7 @@ void inicializar_gpio() {
 void mostrar_matriz_led(int matriz[FILAS][COLUMNAS]) {
     int fila, columna;
 
-    while (!recibida_señal) {
+    while (!recibida_seï¿½al) {
         for (fila = 0; fila < FILAS; fila++) {
             for (columna = 0; columna < COLUMNAS; columna++) {
                 if (matriz[fila][columna] == 1) {
@@ -51,7 +50,7 @@ void mostrar_matriz_led(int matriz[FILAS][COLUMNAS]) {
 }
 
 int main() {
-    signal(SIGINT, manejador_señal);
+    signal(SIGINT, manejador_seï¿½al);
     printf("Presione CTRL-C para salir\n");
 
     inicializar_gpio();
