@@ -5,6 +5,7 @@
 
 #define FIL 8
 #define COL 8
+#define FILCOL 8
 // Funciones que encienden y apagan leds
 #define PI_LOW 0
 #define PI_HIGH 1
@@ -42,9 +43,9 @@ void tab(int tablero[COL][FIL])
 
 void limpiarTab(int tablero[COL][FIL])
 {
-    for (int i = 0; i < COL; i++)
+    for (int i = 0; i < FILCOL; i++)
     {
-        for (int j = 0; j < FIL; j++)
+        for (int j = 0; j < FILCOL; j++)
         {
             tablero[i][j] = 0;
         }
