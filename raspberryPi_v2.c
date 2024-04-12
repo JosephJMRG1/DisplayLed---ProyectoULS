@@ -41,15 +41,16 @@ void iniciarGPIO()
 
 void encenderLeds()
 {
-    for (int i = 0; i < FILCOL; i++)
+    for (int i = 0; i < COLUMNAS; i++)
     {
-        gpioWrite(pines_columnas[FILAS], PI_LOW);
-        gpioWrite(pines_columnas[COLUMNAS], PI_HIGH);
+        gpioWrite(pines_columnas[i], PI_LOW);  // Apagar la columna
+        gpioWrite(pines_filas[i], PI_HIGH);   // Encender la fila
         pausa();
-        gpioWrite(pines_columnas[FILAS], PI_HiGH);
-        gpioWrite(pines_columnas[COLUMNAS], PI_LOW);
+        gpioWrite(pines_filas[i], PI_LOW);    // Apagar la fila
+        gpioWrite(pines_columnas[i], PI_HIGH); // Encender la columna
     }
 }
+
 
 int main()
 {
