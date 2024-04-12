@@ -5,6 +5,7 @@
 
 #define FIL 8
 #define COL 8
+// Funciones que encienden y apagan leds
 #define PI_LOW 0
 #define PI_HIGH 1
 
@@ -50,7 +51,7 @@ void limpiarTab(int tablero[COL][FIL])
     }
 }
 
-/* Simulacion del encendido y apagado de los leds */
+/* Simulación del encendido y apagado de los leds */
 
 void recorrerTab(int tablero[COL][FIL])
 {
@@ -70,10 +71,11 @@ void recorrerTab(int tablero[COL][FIL])
 int main()
 {
 
-    int tablero[COL][FIL];
-
+    // Funciones para que el usuario cancele el programa
     signal(SIGINT, signal_handler);
     printf("Presione CTRL + C para salir...\n\n");
+
+    int tablero[COL][FIL];
 
     int regressive = 0;
     for (int i = 3; regressive < i; i--)
