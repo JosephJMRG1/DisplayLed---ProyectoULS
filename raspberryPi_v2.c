@@ -43,14 +43,11 @@ void encenderLeds()
 {
     for (int i = 0; i < FILCOL; i++)
     {
-        for (int j = 0; j < count; j++)
-        {
-            gpioWrite(pines_columnas[FILAS], PI_LOW);
-            gpioWrite(pines_columnas[COLUMNAS], PI_HIGH);
-            pausa();
-            gpioWrite(pines_columnas[FILAS], PI_HiGH);
-            gpioWrite(pines_columnas[COLUMNAS], PI_LOW);
-        }
+        gpioWrite(pines_columnas[FILAS], PI_LOW);
+        gpioWrite(pines_columnas[COLUMNAS], PI_HIGH);
+        pausa();
+        gpioWrite(pines_columnas[FILAS], PI_HiGH);
+        gpioWrite(pines_columnas[COLUMNAS], PI_LOW);
     }
 }
 
