@@ -53,7 +53,7 @@ void limpiarTab(int tablero[COL][FIL])
 
 /* Simulación del encendido y apagado de los leds */
 
-void recorrerTab(int tablero[COL][FIL])
+void encenderLeds(int tablero[COL][FIL])
 {
     for (int i = 0; i < COL; i++)
     {
@@ -88,7 +88,7 @@ int main()
 
     while (!received_signal)
     {
-        recorrerTab(tablero);
+        encenderLeds(tablero);
     }
 
     return 0;
