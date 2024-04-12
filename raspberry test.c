@@ -10,15 +10,21 @@
 
 volatile sig_atomic_t received_signal = 0;
 
+/* Esta función maneja las señales recibidas del usuario */
+
 void signal_handler(int signal)
 {
     received_signal = signal;
 }
 
+/* Uso de función específica de pausa para mayor control */
+
 void pausa()
 {
-    usleep(1000000);
+    usleep(1000000); // 10^0 = 1 Segundo | 10^-3 = MiliSegundos | 10^-6 = MicroSegundos
 }
+
+/* Sección dirigida a la simulación de la placa de cobre */
 
 void tab(int tablero[COL][FIL])
 {
@@ -44,6 +50,8 @@ void limpiarTab(int tablero[COL][FIL])
     }
 }
 
+/* Simulacion del encendido y apagado de los leds */
+
 void recorrerTab(int tablero[COL][FIL])
 {
     for (int i = 0; i < COL; i++)
@@ -65,7 +73,7 @@ int main()
     int tablero[COL][FIL];
 
     signal(SIGINT, signal_handler);
-    printf("Presione CTRL + C para salir...\n");
+    printf("Presione CTRL + C para salir...\n\n");
 
     int regressive = 0;
     for (int i = 3; regressive < i; i--)
