@@ -6,8 +6,8 @@
 #define FILAS 8
 #define COLUMNAS 8
 
-const int pines_filas[FILAS] = {2, 3, 4, 5, 6, 7, 8, 9};               // Pines GPIO para las filas
-const int pines_columnas[COLUMNAS] = {10, 11, 12, 13, 14, 15, 16, 17}; // Pines GPIO para las columnas
+const int pines_filas[FILAS] = {24,25,8,7,12,16,20,21}; // Pines GPIO para las filas
+const int pines_columnas[COLUMNAS] = {26,19,13,6,5,11,9,10}; // Pines GPIO para las columnas
 
 volatile sig_atomic_t received_signal = 0;
 
