@@ -13,21 +13,18 @@ const int pines_columnas[COLUMNAS] = {26, 19, 13, 6, 5, 11, 9, 10}; // Pines GPI
 volatile sig_atomic_t received_signal = 0;
 
 /* función maneja las señales recibidas del usuario */
-
 void signal_handler(int signal)
 {
     received_signal = signal;
 }
 
 /* Uso de función específica de pausa para mayor control */
-
 void pausa()
 {
     usleep(100); // 10^0 = 1 Segundo | 10^-3 = MiliSegundos | 10^-6 = MicroSegundos
 }
 
 /* Dejar en limpio pines del GPIO */
-
 void iniciarGPIO()
 {
     for (int i = 0; i < FILCOL; i++)
@@ -38,10 +35,9 @@ void iniciarGPIO()
 }
 
 /* Test de Leds */
-
 void encenderLeds()
 {
-    for (int i = 0; i < COLUMNAS; i++)
+    for (int i = 0; i < FILCOL; i++)
     {
         gpioWrite(pines_columnas[i], PI_LOW);  // Apagar la columna
         gpioWrite(pines_filas[i], PI_HIGH);   // Encender la fila
@@ -50,7 +46,6 @@ void encenderLeds()
         gpioWrite(pines_columnas[i], PI_HIGH); // Encender la columna
     }
 }
-
 
 int main()
 {
@@ -75,7 +70,7 @@ int main()
     iniciarGPIO();
     while (!received_signal)
     {
-        encenderLeds(tablero);
+        encenderLeds();
     }
 
     gpioTerminate();
