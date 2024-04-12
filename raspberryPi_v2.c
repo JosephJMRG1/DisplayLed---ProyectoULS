@@ -26,7 +26,6 @@ void inicializar_gpio()
 
     for (int i = 0; i < FILAS; i++)
     {
-        gpioSetMode(pines_filas[i], PI_OUTPUT);
         for (int j = 0; j < COLUMNAS; j++)
         {
             gpioSetMode(pines_columnas[j], PI_OUTPUT);
