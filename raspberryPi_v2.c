@@ -5,12 +5,12 @@
 
 #define FILAS 8
 #define COLUMNAS 8
+#define FILCOL 8
 
-const int pines_filas[FILAS] = {24,25,8,7,12,16,20,21}; // Pines GPIO para las filas
-const int pines_columnas[COLUMNAS] = {26,19,13,6,5,11,9,10}; // Pines GPIO para las columnas
+const int pines_filas[FILAS] = {24, 25, 8, 7, 12, 16, 20, 21};      // Pines GPIO para las filas
+const int pines_columnas[COLUMNAS] = {26, 19, 13, 6, 5, 11, 9, 10}; // Pines GPIO para las columnas
 
 volatile sig_atomic_t received_signal = 0;
-
 
 /* función maneja las señales recibidas del usuario */
 
@@ -30,12 +30,10 @@ void pausa()
 
 void iniciarGPIO()
 {
-    for (int i = 0; i < COLUMNAS; i++)
+    for (int i = 0; i < FILCOL; i++)
     {
-        for (int j = 0; j < FILAS; j++)
-        {
-            gpioSetMode(pines_columnas[j], PI_OUTPUT);
-        }
+        gpioSetMode(pines_filas[I], PI_OUTPUT);
+        gpioSetMode(pines_columnas[j], PI_OUTPUT);
     }
 }
 
@@ -43,7 +41,7 @@ void iniciarGPIO()
 
 void encenderLeds()
 {
-    for (int i = 0; i < COLUMNAS; i++)
+    for (int i = 0; i < FILCOL; i++)
     {
         for (int j = 0; j < count; j++)
         {
@@ -54,7 +52,6 @@ void encenderLeds()
             gpioWrite(pines_columnas[COLUMNAS], PI_LOW);
         }
     }
-    
 }
 
 int main()
@@ -67,16 +64,21 @@ int main()
         printf("ERROR: No fue posible inicializar GPIO\n");
         exit(1);
     }
-
-    int regressive = 0;
-    for (int i = 3; regressive < i; i--)
+    else
     {
-        printf("%i\n\n", i);
-        usleep(1000000);
+        int regresiva = 0;
+        for (int i = 3; regresiva < i; i--)
+        {
+            printf("%i\n\n", i);
+            usleep(1000000);
+        }
     }
 
     iniciarGPIO();
-    encenderLeds();
+    while (!received_signal)
+    {
+        encenderLeds(tablero);
+    }
 
     gpioTerminate();
     printf("Programa Finalizado\n");
