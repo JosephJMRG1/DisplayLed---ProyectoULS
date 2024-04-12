@@ -3,12 +3,10 @@
 #include <unistd.h>
 #include <pigpio.h>
 
-#define FILAS 8
-#define COLUMNAS 8
 #define FILCOL 8
 
-const int pines_filas[FILAS] = {24, 25, 8, 7, 12, 16, 20, 21};      // Pines GPIO para las filas
-const int pines_columnas[COLUMNAS] = {26, 19, 13, 6, 5, 11, 9, 10}; // Pines GPIO para las columnas
+const int pines_filas[FILCOL] = {24, 25, 8, 7, 12, 16, 20, 21};      // Pines GPIO para las filas
+const int pines_columnas[FILCOL] = {26, 19, 13, 6, 5, 11, 9, 10}; // Pines GPIO para las columnas
 
 volatile sig_atomic_t received_signal = 0;
 
