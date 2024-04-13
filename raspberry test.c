@@ -43,11 +43,12 @@ void tab(int tablero[COL][FIL])
 
 void limpiarTab(int tablero[COL][FIL])
 {
-    for (int i = 0; i < FILCOL; i++)
+    char blankSpace = ' ';
+    for (int i = 0; i < COL; i++)
     {
-        for (int j = 0; j < FILCOL; j++)
+        for (int j = 0; j < FIL; j++)
         {
-            tablero[i][j] = 0;
+            tablero[i][j] = blankSpace;
         }
     }
 }

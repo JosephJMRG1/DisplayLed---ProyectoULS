@@ -27,8 +27,8 @@ void iniciarGPIO()
 {
     for (int i = 0; i < FILCOL; i++)
     {
-        gpioSetMode(pines_filas[I], PI_OUTPUT);
-        gpioSetMode(pines_columnas[j], PI_OUTPUT);
+        gpioSetMode(pines_filas[i], PI_OUTPUT);
+        gpioSetMode(pines_columnas[i], PI_OUTPUT);
     }
 }
 
