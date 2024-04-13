@@ -5,7 +5,7 @@
 
 #define FILCOL 8
 
-const int pines_filas[FILCOL] = {24, 25, 8, 7, 12, 16, 20, 21};      // Pines GPIO para las filas
+const int pines_filas[FILCOL] = {24, 25, 8, 7, 12, 16, 20, 21};   // Pines GPIO para las filas
 const int pines_columnas[FILCOL] = {26, 19, 13, 6, 5, 11, 9, 10}; // Pines GPIO para las columnas
 
 volatile sig_atomic_t received_signal = 0;
@@ -37,12 +37,56 @@ void encenderLeds()
 {
     for (int i = 0; i < FILCOL; i++)
     {
-        gpioWrite(pines_columnas[i], PI_LOW);  // Apagar la columna
+        gpioWrite(pines_columnas[i], PI_LOW); // Apagar la columna
         gpioWrite(pines_filas[i], PI_HIGH);   // Encender la fila
         pausa();
-        gpioWrite(pines_filas[i], PI_LOW);    // Apagar la fila
+        gpioWrite(pines_filas[i], PI_LOW);     // Apagar la fila
         gpioWrite(pines_columnas[i], PI_HIGH); // Encender la columna
     }
+}
+
+void leerArchivo()
+{
+    FILE *archivo = fopen("matriz.txt", "r");
+    if (archivo == NULL)
+    {
+        printf("Error al abrir el archivo");
+        return;
+    }
+
+    int valor;
+    int fila = 0;
+    int columna = 0;
+
+    while (fscanf(archivo, "%d", &valor) == 1)
+    {
+        if (valor == 1)
+        {
+            gpioWrite(pines_filas[fila], PI_HIGH);
+            gpioWrite(pines_columnas[columna], PI_LOW);
+        }
+        else if (valor == 0)
+        {
+            gpioWrite(pines_filas[fila], PI_LOW);
+            gpioWrite(pines_columnas[columna], PI_HIGH);
+        }
+
+        columna++;
+        if (columna == FILCOL)
+        {
+            columna = 0;
+            fila++;
+        }
+
+        if (fila == FILCOL)
+        {
+            fila = 0;
+            pausa();
+            iniciarGPIO();   // Reinicia los pines GPIO para evitar problemas de estado
+        }
+    }
+
+    fclose(archivo);
 }
 
 int main()
