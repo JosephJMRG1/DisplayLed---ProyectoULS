@@ -90,7 +90,6 @@ void encenderLeds(int tablero[COL][FIL])
     }
 }
 
-
 int main()
 {
 
