@@ -19,7 +19,7 @@ void signal_handler(int signal)
 /* Uso de función específica de pausa para mayor control */
 void pausa()
 {
-    usleep(100); // 10^0 = 1 Segundo | 10^-3 = MiliSegundos | 10^-6 = MicroSegundos
+    usleep(100); // 10^0 = 1 MicroSegundos | 10^3 = MiliSegundos | 10^6 = Segundos
 }
 
 /* Dejar en limpio pines del GPIO */

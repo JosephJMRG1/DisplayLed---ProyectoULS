@@ -1,3 +1,5 @@
+BackUp 1 | 12-04-24 ; 22.45hrs  --------------------------------------
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -23,7 +25,7 @@ void signal_handler(int signal)
 
 void pausa()
 {
-    usleep(100); // 10^0 = 1 MicroSegundos | 10^3 = MiliSegundos | 10^6 = Segundos
+    usleep(1000000); // 10^0 = 1 Segundo | 10^-3 = MiliSegundos | 10^-6 = MicroSegundos
 }
 
 /* Sección dirigida a la simulación de la placa de cobre */
@@ -34,44 +36,45 @@ void crearTab(int tablero[COL][FIL])
     {
         for (int j = 0; j < FIL; j++)
         {
-            printf("%2d", tablero[i][j]);
+            printf("%2d", tablero[i][j] = printf(" "));
         }
         printf("\n");
     }
     printf("\n");
 }
-
+/*
 void limpiarTab(int tablero[COL][FIL])
 {
     for (int i = 0; i < COL; i++)
     {
         for (int j = 0; j < FIL; j++)
         {
-            tablero[i][j] = 0; // Asigna 0 (entero) a cada elemento de la matriz
+            tablero[i][j];
         }
+        printf("\n");
     }
-}
-
-void usarTab(int tablero[COL][FIL])
+    printf("\n");
+}*/
+/*
+void usarTablero(int tablero[COL][FIL])
 {
     for (int i = 0; i < COL; i++)
     {
         for (int j = 0; j < FIL; j++)
         {
-            if (tablero[i][j] == PI_LOW)
+            if (tablero[i][j] == 0)
             {
-                printf("   "); // Mostrar espacios en blanco si el valor es PI_LOW
+                printf("|"); // Mostrar espacios en blanco si el valor es 0
             }
             else
             {
-                printf("%3d", tablero[i][j]); // Mostrar el valor si no es PI_LOW
+                printf("%2d", tablero[i][j]); // Mostrar el valor si no es 0
             }
         }
+        printf("|");
         printf("\n");
     }
-    printf("\n");
-}
-
+}*/
 
 /* Simulación del encendido y apagado de los leds */
 
@@ -82,14 +85,14 @@ void encenderLeds(int tablero[COL][FIL])
         for (int j = 0; j < FIL; j++)
         {
             tablero[i][j] = PI_HIGH;
-            usarTab(tablero); // Mostrar el tablero con PI_HIGH
+            crearTab(tablero); // Mostrar el tablero con PI_HIGH
             pausa();
             tablero[i][j] = PI_LOW;
+            //crearTab(tablero); // Mostrar el tablero con PI_LOW
         }
         printf("\n");
     }
 }
-
 
 int main()
 {
@@ -107,7 +110,7 @@ int main()
         usleep(1000000);
     }
 
-    limpiarTab(tablero);
+    //limpiarTab(tablero);
 
     while (!received_signal)
     {
