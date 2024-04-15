@@ -98,15 +98,11 @@ int main()
     {
         printf("ERROR: No fue posible inicializar GPIO\n");
         exit(1);
-    }
-    else
-    {
-        int regresiva = 0;
-        for (int i = 3; regresiva < i; i--)
-        {
-            printf("%i\n\n", i);
-            usleep(1000000);
-        }
+    } else {
+
+        printf("Presiona Enter para Comenzar...")
+        getchar();
+
     }
 
     iniciarGPIO();
