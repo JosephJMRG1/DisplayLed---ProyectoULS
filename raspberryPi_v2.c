@@ -37,11 +37,11 @@ void encenderLeds()
 {
     for (int i = 0; i < FILCOL; i++)
     {
-        gpioWrite(pines_columnas[i], PI_LOW); // Apagar la columna
-        gpioWrite(pines_filas[i], PI_HIGH);   // Encender la fila
+        gpioWrite(pines_columnas[i], PI_LOW);
+        gpioWrite(pines_filas[i], PI_HIGH);  
         pausa();
-        gpioWrite(pines_filas[i], PI_LOW);     // Apagar la fila
-        gpioWrite(pines_columnas[i], PI_HIGH); // Encender la columna
+        gpioWrite(pines_filas[i], PI_LOW);    
+        gpioWrite(pines_columnas[i], PI_HIGH);
     }
 }
 
@@ -102,7 +102,6 @@ int main()
 
         printf("Presiona Enter para Comenzar...")
         getchar();
-
     }
 
     iniciarGPIO();
