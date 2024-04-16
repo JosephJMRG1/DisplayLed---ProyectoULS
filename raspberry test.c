@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
+#include <csignal>
 
 #define FIL 8
 #define COL 8

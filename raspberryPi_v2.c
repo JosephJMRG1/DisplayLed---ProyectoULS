@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <signal.h>
 #include <unistd.h>
 #include <pigpio.h>
+#include <signal.h>
 
 #define FILCOL 8
 
@@ -100,7 +100,7 @@ int main()
         exit(1);
     } else {
 
-        printf("Presiona Enter para Comenzar...")
+        printf("Presiona Enter para Comenzar...");
         getchar();
     }
 
