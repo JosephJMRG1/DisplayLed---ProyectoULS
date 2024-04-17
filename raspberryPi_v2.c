@@ -123,6 +123,7 @@ int main()
     detenerGPIO();
     gpioTerminate();
     printf("Programa Finalizado\n");
+    getchar();
 
     return 0;
 }
