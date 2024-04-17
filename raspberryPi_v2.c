@@ -5,8 +5,8 @@
 
 #define FILCOL 8
 
-const int pines_filas[FILCOL] = {24, 25, 8, 7, 12, 16, 20, 21};   // Pines GPIO para las filas
-const int pines_columnas[FILCOL] = {26, 19, 13, 6, 5, 11, 9, 10}; // Pines GPIO para las columnas
+int pines_filas[FILCOL] = {24, 25, 8, 7, 12, 16, 20, 21};   // Pines GPIO para las filas
+int pines_columnas[FILCOL] = {26, 19, 13, 6, 5, 11, 9, 10}; // Pines GPIO para las columnas
 
 volatile sig_atomic_t received_signal = 0;
 
@@ -24,6 +24,16 @@ void pausa()
 
 /* Dejar en limpio pines del GPIO */
 void iniciarGPIO()
+{
+    for (int i = 0; i < FILCOL; i++)
+    {
+        gpioSetMode(pines_filas[i], PI_OUTPUT);
+        gpioSetMode(pines_columnas[i], PI_OUTPUT);
+    }
+}
+
+/* Apagar todos los pines */
+void detenerGPIO()
 {
     for (int i = 0; i < FILCOL; i++)
     {
@@ -110,6 +120,7 @@ int main()
         encenderLeds();
     }
 
+    detenerGPIO();
     gpioTerminate();
     printf("Programa Finalizado\n");
 
