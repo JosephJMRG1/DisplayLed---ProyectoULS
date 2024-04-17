@@ -103,7 +103,7 @@ void leerArchivo()
     fclose(archivo);
 }
 
-void menuDeSeleccion()
+void menuDeSeleccion(int tablero[FILCOL][FILCOL])
 {
     int opcion;
 
@@ -116,16 +116,12 @@ void menuDeSeleccion()
     if (opcion == 1)
     {
         printf("\nEjecutando Testeo de LEDs...\n");
-        encenderLeds();
+        encenderLeds(tablero);
     }
     else if (opcion == 2)
     {
         printf("\nLeyendo desde archivo...\n");
         leerArchivo();
-    }
-    else
-    {
-        printf("\nOpcion no valida. Por favor, seleccione 1 o 2.\n");
     }
 }
 

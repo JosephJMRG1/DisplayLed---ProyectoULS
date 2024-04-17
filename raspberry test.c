@@ -146,13 +146,11 @@ void menuDeSeleccion(int tablero[FILCOL][FILCOL])
     {
         printf("\nEjecutando Testeo de LEDs...\n");
         encenderLeds(tablero);
-        received_signal = 0;
     }
     else if (opcion == 2)
     {
         printf("\nLeyendo desde archivo...\n");
         leerArchivo();
-        received_signal = 0;
     }
 }
 
