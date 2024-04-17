@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <pigpio.h>
 #include <signal.h>
@@ -47,11 +48,14 @@ void encenderLeds()
 {
     for (int i = 0; i < FILCOL; i++)
     {
-        gpioWrite(pines_columnas[i], PI_LOW);
-        gpioWrite(pines_filas[i], PI_HIGH);  
-        pausa();
-        gpioWrite(pines_filas[i], PI_LOW);    
-        gpioWrite(pines_columnas[i], PI_HIGH);
+        for (int j = 0; j < FILCOL; j++)
+        {
+            gpioWrite(pines_columnas[i], PI_LOW);
+            gpioWrite(pines_filas[i], PI_HIGH);
+            pausa();
+            gpioWrite(pines_filas[i], PI_LOW);
+            gpioWrite(pines_columnas[i], PI_HIGH);
+        }
     }
 }
 
@@ -92,32 +96,55 @@ void leerArchivo()
         {
             fila = 0;
             pausa();
-            iniciarGPIO();   // Reinicia los pines GPIO para evitar problemas de estado
+            iniciarGPIO(); // Reinicia los pines GPIO para evitar problemas de estado
         }
     }
 
     fclose(archivo);
 }
 
+void menuDeSeleccion()
+{
+    int opcion;
+
+    printf("\nMenu de Seleccion:\n");
+    printf("1. Testeo de LEDs\n");
+    printf("2. Leer desde archivo\n");
+    printf("Seleccione una opcion: ");
+    scanf("%d", &opcion);
+
+    if (opcion == 1)
+    {
+        printf("\nEjecutando Testeo de LEDs...\n");
+        encenderLeds();
+    }
+    else if (opcion == 2)
+    {
+        printf("\nLeyendo desde archivo...\n");
+        leerArchivo();
+    }
+    else
+    {
+        printf("\nOpcion no valida. Por favor, seleccione 1 o 2.\n");
+    }
+}
+
 int main()
 {
-    // Funciones para que el usuario cancele el programa
+    // Función para que el usuario cancele el programa
     signal(SIGINT, signal_handler);
-    printf("Presione CTRL-C para salir\n");
+    printf("Presione CTRL-C para volver al menu de seleccion\n");
+
     if (gpioInitialise() == PI_INIT_FAILED)
     {
         printf("ERROR: No fue posible inicializar GPIO\n");
-        exit(1);
-    } else {
-
-        printf("Presiona Enter para Comenzar...");
-        getchar();
+        return 1;
     }
-
+    
     iniciarGPIO();
     while (!received_signal)
     {
-        encenderLeds();
+        menuDeSeleccion();
     }
 
     detenerGPIO();
