@@ -28,18 +28,24 @@ void iniciarGPIO()
 {
     for (int i = 0; i < FILCOL; i++)
     {
-        gpioSetMode(pines_filas[i], PI_OUTPUT);
-        gpioSetMode(pines_columnas[i], PI_OUTPUT);
+        for (int j = 0; j < FILCOL; j++)
+        {
+            gpioSetMode(pines_filas[FILCOL], PI_OUTPUT);
+            gpioSetMode(pines_columnas[FILCOL], PI_OUTPUT);
+        }
     }
 }
 
-/* Apagar todos los pines */
-void detenerGPIO()
+void finalizarGPIO()
 {
+
     for (int i = 0; i < FILCOL; i++)
     {
-        gpioSetMode(pines_filas[i], PI_OUTPUT);
-        gpioSetMode(pines_columnas[i], PI_OUTPUT);
+        for (int j = 0; j < FILCOL; j++)
+        {
+            gpioSetMode(pines_filas[FILCOL], PI_INPUT);
+            gpioSetMode(pines_columnas[FILCOL], PI_INPUT);
+        }
     }
 }
 
@@ -136,17 +142,17 @@ int main()
         printf("ERROR: No fue posible inicializar GPIO\n");
         return 1;
     }
-    
+
     iniciarGPIO();
     while (!received_signal)
     {
         menuDeSeleccion();
     }
 
-    detenerGPIO();
     gpioTerminate();
     printf("Programa Finalizado\n");
-    getchar();
+    gpioSetMode(led, PI_INPUT);
+    //getchar();
 
     return 0;
 }
