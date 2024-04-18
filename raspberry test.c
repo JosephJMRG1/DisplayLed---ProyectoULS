@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
+#include <pigpio.h> // Debe estar incluida después de signal.h
 
 #define FILCOL 8
 // Funciones que encienden y apagan leds
@@ -23,6 +24,25 @@ void signal_handler(int signal)
 void pausa()
 {
     usleep(100); // 10^0 = 1 MicroSegundos | 10^3 = MiliSegundos | 10^6 = Segundos
+}
+
+/* Dejar en limpio pines del GPIO */
+void iniciarGPIO()
+{
+    for (int i = 0; i < FILCOL; i++)
+    {
+        gpioSetMode(pines_filas[i], PI_OUTPUT);
+        gpioSetMode(pines_columnas[i], PI_OUTPUT);
+    }
+}
+
+void finalizarGPIO()
+{
+    for (int i = 0; i < FILCOL; i++)
+    {
+        gpioSetMode(pines_filas[i], PI_INPUT);
+        gpioSetMode(pines_columnas[i], PI_INPUT);
+    }
 }
 
 /* Sección dirigida a la simulación de la placa de cobre */
@@ -156,12 +176,11 @@ void menuDeSeleccion(int tablero[FILCOL][FILCOL])
 
 int main()
 {
-    int tablero[FILCOL][FILCOL];
-
     // Funciones para que el usuario cancele el programa
     signal(SIGINT, signal_handler);
     printf("Presione CTRL + C para volver al menu...\n\n");
 
+    int tablero[FILCOL][FILCOL];
     limpiarTab(tablero);
 
     while (1)
