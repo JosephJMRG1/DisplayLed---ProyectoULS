@@ -140,7 +140,7 @@ void menuDeSeleccion()
             controlarLeds(matriz);
         }
 
-        printf("\nPresione ENTER para repetir la opcion o CTRL-C para volver al menu principal...");
+        printf("\nPresione CTRL-C para volver al menu principal...");
 
         // Limpiar el buffer del teclado
         while (getchar() != '\n')
