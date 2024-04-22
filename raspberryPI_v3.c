@@ -154,8 +154,8 @@ void menuDeSeleccion()
     {
         printf("\nMenu de Seleccion:\n");
         printf("1. Testeo de LEDs\n");
-        printf("2. Mostrar matriz del archivo\n");
-        printf("3. Animar matrices del archivo\n");
+        printf("2. Mostrar Imagen (archivo)\n");
+        printf("3. Mostrar Animacion (archivo)\n");
         printf("Seleccione una opcion: ");
         scanf("%d", &opcion);
 
@@ -176,7 +176,7 @@ void menuDeSeleccion()
             animarMatrices();
         }
 
-        printf("\nPresione ENTER para repetir la opcion o CTRL-C para volver al menu principal...");
+        printf("\nPresione CTRL-C para volver al menu principal...");
 
         // Limpiar el buffer del teclado
         while (getchar() != '\n')
