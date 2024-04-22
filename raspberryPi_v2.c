@@ -102,7 +102,7 @@ void menuDeSeleccion()
 {
     int opcion;
 
-    while (1) // Loop infinito hasta que el usuario decida cancelar
+    while (!signalCatch) // Loop hasta que el usuario decida cancelar
     {
         printf("\nMenu de Seleccion:\n");
         printf("1. Testeo de LEDs\n");
@@ -121,17 +121,16 @@ void menuDeSeleccion()
             leerArchivo();
         }
 
-        printf("\nPresione cualquier tecla para volver al menu de seleccion...");
-        getchar(); // Espera a que el usuario presione cualquier tecla para continuar
+        printf("\nPresione ENTER para repetir la opcion o CTRL-C para volver al menu principal...");
 
-        // Si se presiona una tecla, limpiar el buffer del teclado
+        // Limpiar el buffer del teclado
         while (getchar() != '\n')
             ;
-
-        // Si el usuario presionó una tecla, salir del bucle infinito
-        if (signalCatch)
-            break;
     }
+
+    // Si se presiona CTRL-C, limpiar el buffer del teclado
+    while (getchar() != '\n')
+        ;
 }
 
 int main()
