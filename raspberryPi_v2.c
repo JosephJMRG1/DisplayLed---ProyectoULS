@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
-#include <pigpio.h> // Debe estar incluida después de signal.h
+#include <pigpio.h>
 
 #define FILCOL 8
 
@@ -22,22 +22,29 @@ void pausa()
     usleep(100); // 10^0 = 1 MicroSegundos | 10^3 = MiliSegundos | 10^6 = Segundos
 }
 
-/* Dejar en limpio pines del GPIO */
+/* Preparar los pines del GPIO */
 void iniciarGPIO()
 {
     for (int i = 0; i < FILCOL; i++)
     {
-        gpioSetMode(pines_filas[i], PI_OUTPUT);
-        gpioSetMode(pines_columnas[i], PI_OUTPUT);
+        for (int j = 0; j < FILCOL; j++)
+        {
+            gpioSetMode(pines_filas[i], PI_OUTPUT);
+            gpioSetMode(pines_columnas[j], PI_OUTPUT);
+        }
     }
 }
 
+/* Liberar los pines del GPIO */
 void finalizarGPIO()
 {
     for (int i = 0; i < FILCOL; i++)
     {
-        gpioSetMode(pines_filas[i], PI_INPUT);
-        gpioSetMode(pines_columnas[i], PI_INPUT);
+        for (int j = 0; j < FILCOL; j++)
+        {
+            gpioSetMode(pines_filas[i], PI_INPUT);
+            gpioSetMode(pines_columnas[j], PI_INPUT);
+        }
     }
 }
 
@@ -46,15 +53,18 @@ void encenderLeds()
 {
     for (int i = 0; i < FILCOL; i++)
     {
-        gpioWrite(pines_columnas[i], PI_LOW);
-        gpioWrite(pines_filas[i], PI_HIGH);
-        pausa();
-        gpioWrite(pines_filas[i], PI_LOW);
-        gpioWrite(pines_columnas[i], PI_HIGH);
+        for (int j = 0; j < FILCOL; j++)
+        {
+            gpioWrite(pines_columnas[j], PI_LOW);
+            gpioWrite(pines_filas[i], PI_HIGH);
+            pausa();
+            gpioWrite(pines_filas[i], PI_LOW);
+            gpioWrite(pines_columnas[j], PI_HIGH);
+        }
     }
 }
 
-void leerArchivo()
+void leerArchivo(int matriz[FILCOL][FILCOL])
 {
     FILE *archivo = fopen("matriz.txt", "r");
     if (archivo == NULL)
@@ -63,39 +73,42 @@ void leerArchivo()
         return;
     }
 
-    int valor;
-    int fila = 0;
-    int columna = 0;
-
-    while (fscanf(archivo, "%d", &valor) == 1)
+    for (int i = 0; i < FILCOL; i++)
     {
-        if (valor == 1)
+        for (int j = 0; j < FILCOL; j++)
         {
-            gpioWrite(pines_filas[fila], PI_HIGH);
-            gpioWrite(pines_columnas[columna], PI_LOW);
-        }
-        else if (valor == 0)
-        {
-            gpioWrite(pines_filas[fila], PI_LOW);
-            gpioWrite(pines_columnas[columna], PI_HIGH);
-        }
-
-        columna++;
-        if (columna == FILCOL)
-        {
-            columna = 0;
-            fila++;
-        }
-
-        if (fila == FILCOL)
-        {
-            fila = 0;
-            pausa();
-            iniciarGPIO(); // Reinicia los pines GPIO para evitar problemas de estado
+            if (fscanf(archivo, "%d", &matriz[i][j]) != 1)
+            {
+                printf("Error al leer el archivo");
+                fclose(archivo);
+                return;
+            }
         }
     }
 
     fclose(archivo);
+}
+
+void controlarLeds(int matriz[FILCOL][FILCOL])
+{
+    for (int i = 0; i < FILCOL; i++)
+    {
+        for (int j = 0; j < FILCOL; j++)
+        {
+            if (matriz[i][j] == 1)
+            {
+                gpioWrite(pines_filas[i], PI_HIGH);
+                gpioWrite(pines_columnas[j], PI_LOW);
+            }
+            else
+            {
+                gpioWrite(pines_filas[i], PI_LOW);
+                gpioWrite(pines_columnas[j], PI_HIGH);
+            }
+
+            pausa();
+        }
+    }
 }
 
 void menuDeSeleccion()
@@ -118,7 +131,10 @@ void menuDeSeleccion()
         else if (opcion == 2)
         {
             printf("\nLeyendo desde archivo...\n");
-            leerArchivo();
+            int matriz[FILCOL][FILCOL];
+            leerArchivo(matriz);
+            printf("\nControlando LEDs segun la matriz...\n");
+            controlarLeds(matriz);
         }
 
         printf("\nPresione ENTER para repetir la opcion o CTRL-C para volver al menu principal...");
@@ -149,6 +165,7 @@ int main()
     menuDeSeleccion();
     gpioTerminate();
     printf("Programa Finalizado\n");
+    finalizarGPIO();
 
     return 0;
 }
