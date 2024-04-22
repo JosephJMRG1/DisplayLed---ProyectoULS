@@ -77,17 +77,20 @@ void leerArchivo(int matriz[FILCOL][FILCOL])
     {
         for (int j = 0; j < FILCOL; j++)
         {
-            if (fscanf(archivo, "%d", &matriz[i][j]) != 1)
+            int valor;
+            if (fscanf(archivo, "%d", &valor) != 1 || (valor != 0 && valor != 1))
             {
                 printf("Error al leer el archivo");
                 fclose(archivo);
                 return;
             }
+            matriz[i][j] = valor;
         }
     }
 
     fclose(archivo);
 }
+
 
 void controlarLeds(int matriz[FILCOL][FILCOL])
 {
