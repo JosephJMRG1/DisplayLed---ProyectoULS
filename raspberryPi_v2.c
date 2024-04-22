@@ -91,7 +91,6 @@ void leerArchivo(int matriz[FILCOL][FILCOL])
     fclose(archivo);
 }
 
-
 void controlarLeds(int matriz[FILCOL][FILCOL])
 {
     for (int i = 0; i < FILCOL; i++)
